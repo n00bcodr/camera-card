@@ -178,7 +178,7 @@ class GalleryCard extends LitElement {
       this._selectResource(this.currentResourceIndex+1, true);
 
     if (this.config.slideshow_timer) {
-      const time = Number.parseInt(this.config.slideshow_timer);
+      const time = Number.parseFloat(this.config.slideshow_timer);
 
       if (!Number.isNaN(time) && time > 0) {
         setTimeout(() => {this._doSlideShow();}, (time * 1000));
