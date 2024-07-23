@@ -1,3 +1,14 @@
+## [1.3.1](https://github.com/jdrusso/gallery-card/compare/v1.3.0...v1.3.1) (2024-07-23)
+
+
+### Bug Fixes
+
+* change this back to reference ([eb389b6](https://github.com/jdrusso/gallery-card/commit/eb389b60f05c959f94d01c7996e912cc2743d557))
+* foo ([4514d1e](https://github.com/jdrusso/gallery-card/commit/4514d1e5b0f141ac29334ee05903faa41455c77d))
+* more debugging output ([68bc4f4](https://github.com/jdrusso/gallery-card/commit/68bc4f417878f99bf49dc0f69db9d6b356e12e30))
+* Move regex filter ([39d9e7c](https://github.com/jdrusso/gallery-card/commit/39d9e7c00cb59bbdfb86adc4fef5e1758323c151))
+* remove extra logging ([7c3d5cf](https://github.com/jdrusso/gallery-card/commit/7c3d5cfea37c5902884ba4c06aaa8f2f83215af7))
+
 ## [1.3.0-dev.5](https://github.com/jdrusso/gallery-card/compare/v1.3.0-dev.4...v1.3.0-dev.5) (2024-07-23)
 
 
