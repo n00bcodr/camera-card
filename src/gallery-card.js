@@ -667,8 +667,11 @@ class GalleryCard extends LitElement {
 
       // Apply regex filter if specified in config
       if (this.config.filter_regex) {
+        console.log("Trimming files");
+        console.log(files);
         const regex = new RegExp(this.config.filter_regex);
         files = files.filter(file => file.match(regex));
+        console.log(files);
       }
 
       if (reverseSort)
