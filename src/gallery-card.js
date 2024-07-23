@@ -564,19 +564,25 @@ class GalleryCard extends LitElement {
 
     return Promise.all(this._fetchMedia(reference, hass, mediaItem, recursive, includeVideo, includeImages, filterForDate))
       .then(function(values) {
-        const mediaItems = values
-          .flat(Number.POSITIVE_INFINITY)
-          .filter(function(item) {return item !== undefined;})
-          .sort(
-            function (a, b) {
-              if (a.title > b.title) {
-                return 1;
-              }
-              if (a.title < b.title) {
-                return -1;
-              }
-            return 0;
-          });
+        let mediaItems = values.flat(Number.POSITIVE_INFINITY);
+        
+        // Apply regex filter if specified in config right after fetching and flattening
+        if (reference.config.filter_regex) {
+          const regex = new RegExp(reference.config.filter_regex);
+          mediaItems = mediaItems.filter(item => item.title.match(regex));
+        }
+
+        mediaItems = mediaItems.filter(function(item) {return item !== undefined;});
+
+        mediaItems.sort(function (a, b) {
+          if (a.title > b.title) {
+            return 1;
+          }
+          if (a.title < b.title) {
+            return -1;
+          }
+          return 0;
+        });
 
         if (reverseSort)
           mediaItems.reverse();
@@ -664,15 +670,6 @@ class GalleryCard extends LitElement {
 
     if (files) {
       files = files.filter(file => !file.includes("@eaDir"));
-
-      // Apply regex filter if specified in config
-      if (this.config.filter_regex) {
-        console.log("Trimming files");
-        console.log(files);
-        const regex = new RegExp(this.config.filter_regex);
-        files = files.filter(file => file.match(regex));
-        console.log(files);
-      }
 
       if (reverseSort)
         files.reverse();
