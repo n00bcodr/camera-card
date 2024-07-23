@@ -1,3 +1,10 @@
+## [1.3.0](https://github.com/jdrusso/gallery-card/compare/v1.2.0...v1.3.0) (2024-07-23)
+
+
+### Features
+
+* Allow specifying a filter regex for files ([41c049c](https://github.com/jdrusso/gallery-card/commit/41c049c7ef10e1be95855103f9699b1168c1125e))
+
 ## [1.2.0](https://github.com/jdrusso/gallery-card/compare/v1.1.0...v1.2.0) (2024-07-23)
 
 
