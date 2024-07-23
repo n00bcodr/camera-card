@@ -1,3 +1,10 @@
+## [1.3.0-dev.5](https://github.com/jdrusso/gallery-card/compare/v1.3.0-dev.4...v1.3.0-dev.5) (2024-07-23)
+
+
+### Bug Fixes
+
+* change this back to reference ([3b72b36](https://github.com/jdrusso/gallery-card/commit/3b72b360dfe57a499227b12d9ebac714bafed4e1))
+
 ## [1.3.0-dev.4](https://github.com/jdrusso/gallery-card/compare/v1.3.0-dev.3...v1.3.0-dev.4) (2024-07-23)
 
 
