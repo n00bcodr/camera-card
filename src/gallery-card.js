@@ -665,6 +665,12 @@ class GalleryCard extends LitElement {
     if (files) {
       files = files.filter(file => !file.includes("@eaDir"));
 
+      // Apply regex filter if specified in config
+      if (this.config.filter_regex) {
+        const regex = new RegExp(this.config.filter_regex);
+        files = files.filter(file => file.match(regex));
+      }
+
       if (reverseSort)
         files.reverse();
 
