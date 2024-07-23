@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/jdrusso/gallery-card/compare/v1.0.0...v1.1.0) (2024-07-23)
+
+
+### Features
+
+* Add reverse_slideshow parameter to play slideshow in reverse ([092cdd0](https://github.com/jdrusso/gallery-card/commit/092cdd024dc6af1b1445663cd35a8e2461eff5c5))
+
 ## 1.0.0 (2024-07-23)
 
 
