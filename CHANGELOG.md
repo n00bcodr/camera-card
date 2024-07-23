@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/jdrusso/gallery-card/compare/v1.1.0...v1.2.0) (2024-07-23)
+
+
+### Features
+
+* add slideshow_every_other to skip frames in slideshow ([e66f6db](https://github.com/jdrusso/gallery-card/commit/e66f6dba6f2ded19d05b8e40eda6cfea7eb749c8))
+
 ## [1.1.0](https://github.com/jdrusso/gallery-card/compare/v1.0.0...v1.1.0) (2024-07-23)
 
 
