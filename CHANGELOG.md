@@ -1,3 +1,10 @@
+## [1.3.0-dev.2](https://github.com/jdrusso/gallery-card/compare/v1.3.0-dev.1...v1.3.0-dev.2) (2024-07-23)
+
+
+### Bug Fixes
+
+* Move regex filter ([59ed208](https://github.com/jdrusso/gallery-card/commit/59ed20834e313a4ac1e74fd7c87685608c0ad13c))
+
 ## [1.3.0-dev.1](https://github.com/jdrusso/gallery-card/compare/v1.2.0...v1.3.0-dev.1) (2024-07-23)
 
 
