@@ -567,9 +567,9 @@ class GalleryCard extends LitElement {
         let mediaItems = values.flat(Number.POSITIVE_INFINITY);
         
         // Apply regex filter if specified in config right after fetching and flattening
-        if (this.config.filter_regex) {
-          const regex = new RegExp(this.config.filter_regex);
-          console.log("Trying to match " + this.config.filter_regex);
+        if (reference.config.filter_regex) {
+          const regex = new RegExp(reference.config.filter_regex);
+          console.log("Trying to match " + reference.config.filter_regex);
           mediaItems = mediaItems.filter(item => item.title.match(regex));
           console.log("Filtered down to " + mediaItems);
         }
