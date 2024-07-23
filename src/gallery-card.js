@@ -174,8 +174,13 @@ class GalleryCard extends LitElement {
   }
 
   _doSlideShow(firstTime) {
-    if (!firstTime)
-      this._selectResource(this.currentResourceIndex+1, true);
+    if (!firstTime) {
+      if (this.config.reverse_slideshow) {
+        this._selectResource(this.currentResourceIndex - 1, true);
+      } else {
+        this._selectResource(this.currentResourceIndex + 1, true);
+      }
+    }
 
     if (this.config.slideshow_timer) {
       const time = Number.parseFloat(this.config.slideshow_timer);
