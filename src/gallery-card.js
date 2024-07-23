@@ -174,13 +174,15 @@ class GalleryCard extends LitElement {
   }
 
   _doSlideShow(firstTime) {
-    if (!firstTime) {
-      if (this.config.reverse_slideshow) {
-        this._selectResource(this.currentResourceIndex - 1, true);
-      } else {
-        this._selectResource(this.currentResourceIndex + 1, true);
-      }
+  if (!firstTime) {
+    const step = this.config.slideshow_every_other ? Number.parseInt(this.config.slideshow_every_other, 10) : 1;
+    
+    if (this.config.reverse_slideshow) {
+      this._selectResource(this.currentResourceIndex - step, true);
+    } else {
+      this._selectResource(this.currentResourceIndex + step, true);
     }
+  }
 
     if (this.config.slideshow_timer) {
       const time = Number.parseFloat(this.config.slideshow_timer);
