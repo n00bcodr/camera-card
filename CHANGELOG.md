@@ -1,3 +1,10 @@
+## [1.3.0-dev.4](https://github.com/jdrusso/gallery-card/compare/v1.3.0-dev.3...v1.3.0-dev.4) (2024-07-23)
+
+
+### Bug Fixes
+
+* foo ([ac9a1b1](https://github.com/jdrusso/gallery-card/commit/ac9a1b11736678743e429db4f1fef6a94b2a1cfe))
+
 ## [1.3.0-dev.3](https://github.com/jdrusso/gallery-card/compare/v1.3.0-dev.2...v1.3.0-dev.3) (2024-07-23)
 
 
