@@ -9,7 +9,7 @@ This was developed for use alongside the [component for Kuna cameras](https://gi
 ![Project Maintenance][maintenance-shield] [![GitHub Activity][activity-shield]][activity-link] [![Open bugs][bugs-shield]][bugs-link] [![Open enhancements][enhancements-shield]][enhancement-link]
 
 
-![Screenshot](https://github.com/lukelalo/gallery-card/raw/master/screenshot.png)
+![Screenshot](https://github.com/kadaan/gallery-card/raw/master/screenshot.png)
 
 ## Images/Video sources
 To display files from a folder, there are now three options when using v3.3+:
@@ -142,22 +142,22 @@ Forked from  [TarheelGrad1998/gallery-card:master](https://github.com/TarheelGra
 
 The files component largely taken from work done by @zsarnett in [the slideshow card](https://github.com/zsarnett/slideshow-card), from which other inspiration was also taken.  
 
-[releases-shield]: https://img.shields.io/github/release/lukelalo/gallery-card.svg
-[releases-link]: https://github.com/lukelalo/gallery-card/releases/latest
-[release-date-shield]: https://img.shields.io/github/release-date/lukelalo/gallery-card
-[latest-download-shield]: https://img.shields.io/github/downloads/lukelalo/gallery-card/latest/total?label=downloads%20latest%20release
-[total-download-shield]: https://img.shields.io/github/downloads/lukelalo/gallery-card/total?label=total%20views
-[traffic-link]: https://github.com/lukelalo/gallery-card/graphs/traffic
+[releases-shield]: https://img.shields.io/github/release/kadaan/gallery-card.svg
+[releases-link]: https://github.com/kadaan/gallery-card/releases/latest
+[release-date-shield]: https://img.shields.io/github/release-date/kadaan/gallery-card
+[latest-download-shield]: https://img.shields.io/github/downloads/kadaan/gallery-card/latest/total?label=downloads%20latest%20release
+[total-download-shield]: https://img.shields.io/github/downloads/kadaan/gallery-card/total?label=total%20views
+[traffic-link]: https://github.com/kadaan/gallery-card/graphs/traffic
 [hacs-shield]: https://img.shields.io/badge/HACS-Default-orange.svg
 [hacs-link]: https://github.com/custom-components/hacs
 [home-assistant-shield]: https://img.shields.io/badge/Home%20Assistant-visual%20editor/yaml-green
 [home-assistant-link]: https://www.home-assistant.io/
 [license-shield]: https://img.shields.io/github/license/custom-cards/boilerplate-card.svg
 [license-link]: LICENSE
-[activity-shield]: https://img.shields.io/github/commit-activity/y/lukelalo/gallery-card.svg
-[activity-link]: https://github.com/lukelalo/gallery-card/commits/master
-[bugs-shield]: https://img.shields.io/github/issues/lukelalo/gallery-card/bug?color=red&label=bugs
-[bugs-link]: https://github.com/lukelalo/gallery-card/labels/bug
-[enhancements-shield]: https://img.shields.io/github/issues/lukelalo/gallery-card/enhancement?color=blue&label=enhancements
-[enhancement-link]: https://github.com/lukelalo/gallery-card/labels/enhancement
+[activity-shield]: https://img.shields.io/github/commit-activity/y/kadaan/gallery-card.svg
+[activity-link]: https://github.com/kadaan/gallery-card/commits/master
+[bugs-shield]: https://img.shields.io/github/issues/kadaan/gallery-card/bug?color=red&label=bugs
+[bugs-link]: https://github.com/kadaan/gallery-card/labels/bug
+[enhancements-shield]: https://img.shields.io/github/issues/kadaan/gallery-card/enhancement?color=blue&label=enhancements
+[enhancement-link]: https://github.com/kadaan/gallery-card/labels/enhancement
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2024.svg
