@@ -1,3 +1,15 @@
+
+
+
+
+## [1.2.1](https://github.com/lukelalo/gallery-card/compare/v1.2.0...v1.2.1) (2024-11-12)
+
+
+### Bug Fixes
+
+* Ensure date picker date is correctly formatted and forlder and search formats can be converted to a specified timezone
+
+
 ## [1.2.0](https://github.com/lukelalo/gallery-card/compare/v1.1.0...v1.2.0) (2024-04-14)
 
 
