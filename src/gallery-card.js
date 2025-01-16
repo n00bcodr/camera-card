@@ -491,7 +491,7 @@ class GalleryCard extends LitElement {
           while (values.length < maximumFiles) {
             const folder = date.format(folderFormat);
 
-            mediaPath = contentId + "/" + folder;
+            mediaPath = contentId + (folder ? ("/" + folder) : "");
 
             if (folder !== folderPrevious) {
               try {
