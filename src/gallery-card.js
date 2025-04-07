@@ -5,9 +5,9 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
-const GalleryCardVersion = "1.0.0";
+const CameraCardVersion = "2.0.1";
 
-class GalleryCard extends LitElement {
+class CameraCard extends LitElement {
   static get properties() {
     return {
       _hass: {},
@@ -44,17 +44,17 @@ class GalleryCard extends LitElement {
                 ` :
                 this._isImageExtension(this._currentResource().extension) ?
                 html`<img @click="${event => this._popupImage(event)}" src="${this._currentResource().url}"/>` :
-                html`<video controls ?loop=${this.config.video_loop} ?autoplay=${this.config.video_autoplay} src="${this._currentResource().url}#t=0.1" @loadedmetadata="${event => this._videoMetadataLoaded(event)}" @canplay="${event => this._startVideo(event)}" 
+                html`<video controls ?loop=${this.config.video_loop} ?autoplay=${this.config.video_autoplay} src="${this._currentResource().url}#t=0.1" @loadedmetadata="${event => this._videoMetadataLoaded(event)}" @canplay="${event => this._startVideo(event)}"
                             @ended="${() => this._videoHasEnded()}" preload="metadata"></video>`
               }
-            <figcaption>${this._currentResource().caption} 
+            <figcaption>${this._currentResource().caption}
               ${this._isImageExtension(this._currentResource().extension) ?
-                  html`` : html`<span class="duration"></span> ` }                  
-              ${this.config.show_zoom ? html`<a href= "${this._currentResource().url}" target="_blank">Zoom</a>` : html`` }                  
+                  html`` : html`<span class="duration"></span> ` }
+              ${this.config.show_zoom ? html`<a href= "${this._currentResource().url}" target="_blank">Zoom</a>` : html`` }
             </figcaption>
-          </figure>  
-          <button class="btn btn-left" @click="${() => this._selectResource(this.currentResourceIndex-1)}">&lt;</button> 
-          <button class="btn btn-right" @click="${() => this._selectResource(this.currentResourceIndex+1)}">&gt;</button> 
+          </figure>
+          <button class="btn btn-left" @click="${() => this._selectResource(this.currentResourceIndex-1)}">&lt;</button>
+          <button class="btn btn-right" @click="${() => this._selectResource(this.currentResourceIndex+1)}">&gt;</button>
         </div>
         <div class="resource-menu">
           ${this.resources.map((resource, index) => {
@@ -70,7 +70,7 @@ class GalleryCard extends LitElement {
                         ></hui-image>
                       ` :
                       this._isImageExtension(resource.extension) ?
-                      html`<img class="lzy_img" src="/local/community/gallery-card/placeholder.jpg" data-src="${resource.url}"/>` :
+                      html`<img class="lzy_img" src="/local/community/camera-card/placeholder.jpg" data-src="${resource.url}"/>` :
                         (this.config.video_preload ?? true) ?
                         html`<video preload="none" data-src="${resource.url}#t=${(this.config.preview_video_at === undefined) ? 0.1 : this.config.preview_video_at }" @loadedmetadata="${event => this._videoMetadataLoaded(event)}" @canplay="${() => this._downloadNextMenuVideo()}" preload="metadata"></video>` :
                           html`<div style="text-align: center"><div class="lzy_img"><ha-icon id="play" icon="mdi:movie-play-outline"></ha-icon></div></div>`
@@ -180,7 +180,7 @@ class GalleryCard extends LitElement {
   _doSlideShow(firstTime) {
   if (!firstTime) {
     const step = this.config.slideshow_every_other ? Number.parseInt(this.config.slideshow_every_other, 10) : 1;
-    
+
     if (this.config.reverse_slideshow) {
       this._selectResource(this.currentResourceIndex - step, true);
     } else {
@@ -483,7 +483,7 @@ class GalleryCard extends LitElement {
       for (const error of resources.filter(result => result.error).flat(Number.POSITIVE_INFINITY)) {
         this.errors.push(error.message + ' ' + error.entity);
         this._hass.callService('system_log', 'write', {
-          message: 'Gallery Card Error:  ' + error.message + '   ' + error.entity
+          message: 'Camera Card Error:  ' + error.message + '   ' + error.entity
         });
       }
     });
@@ -572,7 +572,7 @@ class GalleryCard extends LitElement {
     return Promise.all(this._fetchMedia(reference, hass, mediaItem, recursive, includeVideo, includeImages, filterForDate))
       .then(function(values) {
         let mediaItems = values.flat(Number.POSITIVE_INFINITY);
-        
+
         // Apply regex filter if specified in config right after fetching and flattening
         if (reference.config.filter_regex) {
           const regex = new RegExp(reference.config.filter_regex);
@@ -733,7 +733,7 @@ class GalleryCard extends LitElement {
         date = dayjs(fileDatePart, fileNameFormat);
         if (fileNameTimeZone) {
           date = date.tz(fileNameTimeZone);
-        } 
+        }
       }
 
       if (date && captionFormat) {
@@ -840,7 +840,7 @@ class GalleryCard extends LitElement {
           top: 33%;
         }
         .menu-responsive .resource-menu {
-          width:100%; 
+          width:100%;
           overflow-y: hidden;
           overflow-x: scroll;
           display: flex;
@@ -859,11 +859,11 @@ class GalleryCard extends LitElement {
         .menu-responsive .resource-viewer .btn {
           top: 40%;
         }
-                
+
         .menu-responsive .resource-menu {
-          width:25%; 
+          width:25%;
           height: calc(100vh - 120px);
-          overflow-y: scroll; 
+          overflow-y: scroll;
           float: right;
         }
       }
@@ -874,7 +874,7 @@ class GalleryCard extends LitElement {
         top: 33%;
       }
       .menu-bottom .resource-menu {
-        width:100%; 
+        width:100%;
         overflow-y: hidden;
         overflow-x: scroll;
         display: flex;
@@ -896,11 +896,11 @@ class GalleryCard extends LitElement {
       .menu-right .resource-viewer .btn {
         top: 40%;
       }
-              
+
       .menu-right .resource-menu {
-        width:25%; 
+        width:25%;
         height: calc(100vh - 120px);
-        overflow-y: scroll; 
+        overflow-y: scroll;
         float: right;
       }
       .menu-left .resource-viewer {
@@ -911,11 +911,11 @@ class GalleryCard extends LitElement {
       .menu-left .resource-viewer .btn {
         top: 40%;
       }
-              
+
       .menu-left .resource-menu {
-        width:25%; 
+        width:25%;
         height: calc(100vh - 120px);
-        overflow-y: scroll; 
+        overflow-y: scroll;
         float: left;
       }
       .menu-left .btn-reload {
@@ -934,7 +934,7 @@ class GalleryCard extends LitElement {
         top: 45%;
       }
       .menu-top .resource-menu {
-        width:100%; 
+        width:100%;
         overflow-y: hidden;
         overflow-x: scroll;
         display: flex;
@@ -956,7 +956,7 @@ class GalleryCard extends LitElement {
         top: 33%;
       }
       .menu-hidden .resource-menu {
-        width:100%; 
+        width:100%;
         overflow-y: hidden;
         overflow-x: scroll;
         display: none;
@@ -1010,16 +1010,16 @@ class GalleryCard extends LitElement {
     `;
   }
 }
-customElements.define("gallery-card", GalleryCard);
+customElements.define("camera-card", CameraCard);
 
-console.groupCollapsed(`%cGALLERY-CARD ${GalleryCardVersion} IS INSTALLED`,"color: green; font-weight: bold");
-console.log("Readme:","https://github.com/lukelalo/gallery-card");
+console.groupCollapsed(`%cCAMERA-CARD ${CameraCardVersion} IS INSTALLED`,"color: green; font-weight: bold");
+console.log("Readme:","https://github.com//n00bcodr/camera-card");
 console.groupEnd();
 
 window.customCards = window.customCards || [];
 window.customCards.push({
-  type: "gallery-card",
-  name: "Gallery Card",
+  type: "camera-card",
+  name: "Camera Card",
   preview: false, // Optional - defaults to false
-  description: "The Gallery Card allows for viewing multiple images/videos.  Requires the Files sensor available at https://github.com/TarheelGrad1998" // Optional
+  description: "The Camera Card allows for viewing multiple images/videos.  Requires the Files sensor available at https://github.com/TarheelGrad1998" // Optional
 });

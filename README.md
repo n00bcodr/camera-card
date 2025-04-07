@@ -1,4 +1,4 @@
-# Gallery Card
+# Camera Card
 
 Custom card for Home Assistant's UI LoveLace which will display images and videos in the style of a gallery.  Also supports displaying camera images.
 
@@ -9,7 +9,7 @@ This was developed for use alongside the [component for Kuna cameras](https://gi
 ![Project Maintenance][maintenance-shield] [![GitHub Activity][activity-shield]][activity-link] [![Open bugs][bugs-shield]][bugs-link] [![Open enhancements][enhancements-shield]][enhancement-link]
 
 
-![Screenshot](https://github.com/kadaan/gallery-card/raw/master/screenshot.png)
+![Screenshot](https://github.com/n00bcodr/camera-card/raw/master/screenshot.png)
 
 ## Images/Video sources
 To display files from a folder, there are now three options when using v3.3+:
@@ -18,20 +18,20 @@ To display files from a folder, there are now three options when using v3.3+:
 3. (new in v3.3) [The folder component](https://www.home-assistant.io/integrations/folder/), similar to the files component but included in Home Assistant by default.
 
 #### Pros/Cons
-At present, the decision of which to use is up to you, but there are consequences.  The files and folder components load the files from the server on the backend into a sensor.  This means when Lovelace loads it is much faster to access files.  However, you MUST store your files in the www directory, which means they are essentially publicly available to anyone who can access your HA URL.  The media source component only retrieves files when you load the page, which means it appears slower to load.  However, those files are protected by Home Assistant's authorization and not publicly available.  Additionally, media source files are currently only sorted by file name, where files has more options for date and file size.  
+At present, the decision of which to use is up to you, but there are consequences.  The files and folder components load the files from the server on the backend into a sensor.  This means when Lovelace loads it is much faster to access files.  However, you MUST store your files in the www directory, which means they are essentially publicly available to anyone who can access your HA URL.  The media source component only retrieves files when you load the page, which means it appears slower to load.  However, those files are protected by Home Assistant's authorization and not publicly available.  Additionally, media source files are currently only sorted by file name, where files has more options for date and file size.
 
 ## Installation
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
 
 Now available in HACS, but follow the below to install manually.  For more details, see [Thomas Loven's Install Guide](https://github.com/thomasloven/hass-config/wiki/Lovelace-Plugins)
 
-1.  Place the `gallery-card.js` file under your `/config/www/` folder of Home Assistant (suggest - create a subdirectory for `cards`)
+1.  Place the `camera-card.js` file under your `/config/www/` folder of Home Assistant (suggest - create a subdirectory for `cards`)
 2.  Add the card within the resources section (Config -> Lovelace Dashboards -> Resources)
-    URL: /local/cards/gallery-card.js
+    URL: /local/cards/camera-card.js
     Type: Javascript Module
 3.  Add the gallery card to your Lovelace configuration.  The below is an example config:
     ```
-    type: 'custom:gallery-card'
+    type: 'custom:camera-card'
     entities:
       - camera.front_door
       - sensor.gallery_images
@@ -39,11 +39,11 @@ Now available in HACS, but follow the below to install manually.  For more detai
     menu_alignment: Responsive
     maximum_files: 10
     file_name_format: YYYYMMDD-HHmmss
-    caption_format: M/D h:mm A 
+    caption_format: M/D h:mm A
     ```
 I recommend adding the card to a view which is set to Panel Mode for best results.
 
-### Configuration Variables 
+### Configuration Variables
 Whether using the editor or yaml, the following configurations can be used:
 
 | Name                      | Type     | Default      | Description                                                                                                                                                                                                                                                                                                                                              |
@@ -52,11 +52,11 @@ Whether using the editor or yaml, the following configurations can be used:
 | title                     | string   | **Optional** | The name to show at the top of the card.                                                                                                                                                                                                                                                                                                                 |
 | menu_alignment            | string   | **Optional** | Alignment of the menu (the small list of images/videos to view).  Default is if not specified is Responsive (see below)                                                                                                                                                                                                                                  |
 | maximum_files             | integer  | **Optional** | The number of files to show.  You may want to limit videos to make it perform better and to conserve bandwith.  Used in combination with sort (using the config as above, the latest 10 for each entity by date will be shown)                                                                                                                           |
-| maximum_files_per_entity  | boolean  | **Optional** | Whether the number of files counted are per Entity.  If true, then the maximum files displayed will be up to maximum_files per entity ; if false then only maximum_files total will be displayed (camera entities are always included and count as 1 file).  The default is true.                                                                        |                                                      
-| file_name_format          | string   | **Optional** | The format of the file names (see below).  Used in combination with caption_format for the captions below the image/video.  As of v3.4, this may also be specified at the entity level to override this for a specific entity.                                                                                                                           |                                                           
-| file_name_date_begins     | integer  | **Optional** | The character at which the date begins in the file name (starting at 1).  It is usually not necessary to specify this, but if your dates are not parsing correctly and there are numbers at the start of your file names try this.  This may also be specified at the entity level to override this for a specific entity.                               |                           
-| caption_format            | string   | **Optional** | The format of the caption (see below).  Used in combination with file_name_format. As of v3.4, this may also be specified at the entity level to override this for a specific entity.                                                                                                                                                                    |                          
-| folder_format             | string   | **Optional** | The format of the subfolder names under any media source folders (same options as for Captions below).  Used when reverse_sort is true and maximum_files is specified to more efficiently fetch files from the media source (rather than looking in all folders). This may also be specified at the entity level to override this for a specific entity. | 
+| maximum_files_per_entity  | boolean  | **Optional** | Whether the number of files counted are per Entity.  If true, then the maximum files displayed will be up to maximum_files per entity ; if false then only maximum_files total will be displayed (camera entities are always included and count as 1 file).  The default is true.                                                                        |
+| file_name_format          | string   | **Optional** | The format of the file names (see below).  Used in combination with caption_format for the captions below the image/video.  As of v3.4, this may also be specified at the entity level to override this for a specific entity.                                                                                                                           |
+| file_name_date_begins     | integer  | **Optional** | The character at which the date begins in the file name (starting at 1).  It is usually not necessary to specify this, but if your dates are not parsing correctly and there are numbers at the start of your file names try this.  This may also be specified at the entity level to override this for a specific entity.                               |
+| caption_format            | string   | **Optional** | The format of the caption (see below).  Used in combination with file_name_format. As of v3.4, this may also be specified at the entity level to override this for a specific entity.                                                                                                                                                                    |
+| folder_format             | string   | **Optional** | The format of the subfolder names under any media source folders (same options as for Captions below).  Used when reverse_sort is true and maximum_files is specified to more efficiently fetch files from the media source (rather than looking in all folders). This may also be specified at the entity level to override this for a specific entity. |
 | slideshow_timer           | integer  | **Optional** | If present and greater than 0, will automatically advance the gallery after the provided number of seconds have passed.                                                                                                                                                                                                                                  |
 | slideshow_video_end       | boolean  | **Optional** | If true, will automatically advance the gallery after the video has finished (only for video galleries).                                                                                                                                                                                                                                                 |
 | show_duration             | boolean  | **Optional** | Whether to include the video duration as part of the caption.  The default is true.                                                                                                                                                                                                                                                                      |
@@ -74,7 +74,7 @@ Whether using the editor or yaml, the following configurations can be used:
 | search_date_folder_format | string   | **Optional** | The folder format for date search. Used in combination with "enable_date_search" to specify the folder format for filtering by date. The default value is "DD_MM_YYYY."                                                                                                                                                                                  |
 
 ### Media Source
-To add a media source, specify the path to the media source folder as an entity.  
+To add a media source, specify the path to the media source folder as an entity.
 The format of a media source path should be:  media-source://media_source/{your folders}/
 Only Local Media sources are currently supported (i.e. not DLNA sources)
 
@@ -92,7 +92,7 @@ Examples:
     ```
     entities:
       - path: 'media-source://media_source/surveillance/Carport/'
-        recursive: true 
+        recursive: true
 	include_images: false
     ```
 
@@ -127,7 +127,7 @@ The assumption is that the file name contains the date formatted such that it ca
 Example:
 * file_name_format: YYYY_MM_DD__HH_mm_ss
 	* Assumes the file name is in the format 2023_03_17__20_00_00
-* caption_format: M/D h:mm A	
+* caption_format: M/D h:mm A
 	* Will parse the file name and return a date formatted as 3/17 8:00 PM
 
 Notes:
@@ -138,26 +138,26 @@ Notes:
 
 ## Credits
 
-Forked from  [TarheelGrad1998/gallery-card:master](https://github.com/TarheelGrad1998/gallery-card) to fix 2024 issues
+Forked from  [TarheelGrad1998/camera-card:master](https://github.com/TarheelGrad1998/camera-card) to fix 2024 issues
 
-The files component largely taken from work done by @zsarnett in [the slideshow card](https://github.com/zsarnett/slideshow-card), from which other inspiration was also taken.  
+The files component largely taken from work done by @zsarnett in [the slideshow card](https://github.com/zsarnett/slideshow-card), from which other inspiration was also taken.
 
-[releases-shield]: https://img.shields.io/github/release/kadaan/gallery-card.svg
-[releases-link]: https://github.com/kadaan/gallery-card/releases/latest
-[release-date-shield]: https://img.shields.io/github/release-date/kadaan/gallery-card
-[latest-download-shield]: https://img.shields.io/github/downloads/kadaan/gallery-card/latest/total?label=downloads%20latest%20release
-[total-download-shield]: https://img.shields.io/github/downloads/kadaan/gallery-card/total?label=total%20views
-[traffic-link]: https://github.com/kadaan/gallery-card/graphs/traffic
+[releases-shield]: https://img.shields.io/github/release/n00bcodr/camera-card.svg
+[releases-link]: https://github.com/n00bcodr/camera-card/releases/latest
+[release-date-shield]: https://img.shields.io/github/release-date/n00bcodr/camera-card
+[latest-download-shield]: https://img.shields.io/github/downloads/n00bcodr/camera-card/latest/total?label=downloads%20latest%20release
+[total-download-shield]: https://img.shields.io/github/downloads/n00bcodr/camera-card/total?label=total%20views
+[traffic-link]: https://github.com/n00bcodr/camera-card/graphs/traffic
 [hacs-shield]: https://img.shields.io/badge/HACS-Default-orange.svg
 [hacs-link]: https://github.com/custom-components/hacs
 [home-assistant-shield]: https://img.shields.io/badge/Home%20Assistant-visual%20editor/yaml-green
 [home-assistant-link]: https://www.home-assistant.io/
 [license-shield]: https://img.shields.io/github/license/custom-cards/boilerplate-card.svg
 [license-link]: LICENSE
-[activity-shield]: https://img.shields.io/github/commit-activity/y/kadaan/gallery-card.svg
-[activity-link]: https://github.com/kadaan/gallery-card/commits/master
-[bugs-shield]: https://img.shields.io/github/issues/kadaan/gallery-card/bug?color=red&label=bugs
-[bugs-link]: https://github.com/kadaan/gallery-card/labels/bug
-[enhancements-shield]: https://img.shields.io/github/issues/kadaan/gallery-card/enhancement?color=blue&label=enhancements
-[enhancement-link]: https://github.com/kadaan/gallery-card/labels/enhancement
+[activity-shield]: https://img.shields.io/github/commit-activity/y/n00bcodr/camera-card.svg
+[activity-link]: https://github.com/n00bcodr/camera-card/commits/master
+[bugs-shield]: https://img.shields.io/github/issues/n00bcodr/camera-card/bug?color=red&label=bugs
+[bugs-link]: https://github.com/n00bcodr/camera-card/labels/bug
+[enhancements-shield]: https://img.shields.io/github/issues/n00bcodr/camera-card/enhancement?color=blue&label=enhancements
+[enhancement-link]: https://github.com/n00bcodr/camera-card/labels/enhancement
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2024.svg

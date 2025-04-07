@@ -29,7 +29,7 @@ const plugins = [
 
 export default [
   {
-    input: 'src/gallery-card.js',
+    input: 'src/camera-card.js',
     output: {
       dir: './dist',
       format: 'es',
