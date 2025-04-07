@@ -505,7 +505,7 @@ class GalleryCard extends LitElement {
           while (values.length < maximumFiles) {
             const folder = date.format(folderFormat);
 
-            mediaPath = contentId + "/" + folder;
+            mediaPath = contentId + (folder ? ("/" + folder) : "");
 
             if (folder !== folderPrevious) {
               try {
@@ -566,7 +566,7 @@ class GalleryCard extends LitElement {
     };
 
     if (contentId.substring(contentId.length - 1, contentId.length) !== "/" && contentId !== "media-source://media_source") {
-      mediaItem.media_content_id += "/";
+      //mediaItem.media_content_id += "/";
     }
 
     return Promise.all(this._fetchMedia(reference, hass, mediaItem, recursive, includeVideo, includeImages, filterForDate))
