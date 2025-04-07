@@ -2,6 +2,8 @@ import {LitElement, html, css} from "lit-element";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import relativeTime from "dayjs/plugin/relativeTime";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
 const GalleryCardVersion = "1.0.0";
 
@@ -128,6 +130,8 @@ class GalleryCard extends LitElement {
   setConfig(config) {
     dayjs.extend(customParseFormat);
     dayjs.extend(relativeTime);
+    dayjs.extend(utc);
+    dayjs.extend(timezone);
 
     this.imageObserver = new IntersectionObserver((entries) => {
         for (const entry of entries) {
@@ -353,7 +357,7 @@ class GalleryCard extends LitElement {
   }
 
   _handleDateChange(event) {
-    this.selectedDate = event.target.valueAsDate;
+    this.selectedDate = dayjs(event.target.value);
     this._loadResources(this._hass);
   }
 
@@ -363,13 +367,14 @@ class GalleryCard extends LitElement {
     this.currentResourceIndex = undefined;
     this.resources = [];
     if(this.selectedDate === undefined)
-        this.selectedDate = new Date();
+        this.selectedDate = dayjs().startOf('date');
 
     const maximumFilesPerEntity = this.config.maximum_files_per_entity ?? true;
     const maximumFiles = maximumFilesPerEntity ? this.config.maximum_files : undefined;
     const maximumFilesTotal = maximumFilesPerEntity ? undefined: this.config.maximum_files;
     let folderFormat = this.config.folder_format;
     let fileNameFormat = this.config.file_name_format;
+    let fileNameTimeZone = this.config.file_name_time_zone;
     let fileNameDateBegins = this.config.file_name_date_begins;
     let captionFormat = this.config.caption_format;
     const parsedDateSort = this.config.parsed_date_sort ?? false;
@@ -395,6 +400,8 @@ class GalleryCard extends LitElement {
           folderFormat = entity.folder_format;
         if (entity.file_name_format)
           fileNameFormat = entity.file_name_format;
+        if (entity.file_name_time_zone)
+          fileNameTimeZone = entity.file_name_time_zone;
         if (entity.file_name_date_begins)
           fileNameDateBegins = entity.file_name_date_begins;
         if (entity.caption_format)
@@ -405,7 +412,7 @@ class GalleryCard extends LitElement {
       }
 
       if (entityId.substring(0, 15).toLowerCase() === "media-source://") {
-        commands.push(this._loadMediaResource(hass, entityId, maximumFiles, folderFormat, fileNameFormat, fileNameDateBegins, captionFormat, recursive, reverseSort, includeVideo, includeImages, filterForDate));
+        commands.push(this._loadMediaResource(hass, entityId, maximumFiles, folderFormat, fileNameFormat, fileNameTimeZone, fileNameDateBegins, captionFormat, recursive, reverseSort, includeVideo, includeImages, filterForDate));
       }
       else {
         const entityState = hass.states[entityId];
@@ -423,11 +430,11 @@ class GalleryCard extends LitElement {
 
           // Custom Files component
           if (entityState.attributes.fileList !== undefined)
-            commands.push(this._loadFilesResources(entityState.attributes.fileList, maximumFiles, fileNameFormat, fileNameDateBegins, captionFormat, reverseSort));
+            commands.push(this._loadFilesResources(entityState.attributes.fileList, maximumFiles, fileNameFormat, fileNameTimeZone, fileNameDateBegins, captionFormat, reverseSort));
 
           // HA Folder component
           if (entityState.attributes.file_list !== undefined)
-            commands.push(this._loadFilesResources(entityState.attributes.file_list, maximumFiles, fileNameFormat, fileNameDateBegins, captionFormat, reverseSort));
+            commands.push(this._loadFilesResources(entityState.attributes.file_list, maximumFiles, fileNameFormat, fileNameTimeZone, fileNameDateBegins, captionFormat, reverseSort));
         }
       }
     }
@@ -482,7 +489,7 @@ class GalleryCard extends LitElement {
     });
   }
 
-  _loadMediaResource(hass, contentId, maximumFiles, folderFormat, fileNameFormat, fileNameDateBegins, captionFormat, recursive, reverseSort, includeVideo, includeImages, filterForDate) {
+  _loadMediaResource(hass, contentId, maximumFiles, folderFormat, fileNameFormat, fileNameTimeZone, fileNameDateBegins, captionFormat, recursive, reverseSort, includeVideo, includeImages, filterForDate) {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve) => {
       let mediaPath = contentId;
@@ -533,7 +540,7 @@ class GalleryCard extends LitElement {
         const resources = [];
 
         for (const mediaItem of values) {
-          const resource = this._createFileResource(mediaItem.authenticated_path, fileNameFormat, fileNameDateBegins, captionFormat);
+          const resource = this._createFileResource(mediaItem.authenticated_path, fileNameFormat, fileNameTimeZone, fileNameDateBegins, captionFormat);
 
           if (resource !== undefined) {
             resources.push(resource);
@@ -614,7 +621,7 @@ class GalleryCard extends LitElement {
             return ((includeVideo && mediaItem.media_class === "video") ||
               (includeImages && mediaItem.media_class === "image") ||
               (recursive && mediaItem.media_class === "directory" && (!filterForDate ||
-                (mediaItem.title ===  reference._folderDateFormatter((reference.config.search_date_folder_format === undefined) ? "DD_MM_YYYY" : reference.config.search_date_folder_format,reference.selectedDate) ) ))) &&
+                (mediaItem.title ===  reference._folderDateFormatter((reference.config.search_date_folder_format === undefined) ? "DD_MM_YYYY" : reference.config.search_date_folder_format,reference.config.search_date_folder_time_zone,reference.selectedDate) ) ))) &&
               mediaItem.title !== "@eaDir/";
           })
           .map(mediaItem => {
@@ -665,7 +672,7 @@ class GalleryCard extends LitElement {
     return Promise.resolve(resource);
   }
 
-  _loadFilesResources(files, maximumFiles, fileNameFormat, fileNameDateBegins, captionFormat, reverseSort) {
+  _loadFilesResources(files, maximumFiles, fileNameFormat, fileNameTimeZone, fileNameDateBegins, captionFormat, reverseSort) {
     const resources = [];
 
     if (files) {
@@ -687,7 +694,7 @@ class GalleryCard extends LitElement {
         if (!filePath.includes("/config/www/"))
           fileUrl = "/local/" + filePath.slice(Math.max(0, filePath.indexOf("/www/") + 5));
 
-        const resource = this._createFileResource(fileUrl, fileNameFormat, fileNameDateBegins, captionFormat);
+        const resource = this._createFileResource(fileUrl, fileNameFormat, fileNameTimeZone, fileNameDateBegins, captionFormat);
 
         if (resource !== undefined) {
           resources.push(resource);
@@ -698,7 +705,7 @@ class GalleryCard extends LitElement {
     return Promise.resolve(resources);
   }
 
-  _createFileResource(fileRawUrl, fileNameFormat, fileNameDateBegins, captionFormat) {
+  _createFileResource(fileRawUrl, fileNameFormat, fileNameTimeZone, fileNameDateBegins, captionFormat) {
     let resource;
 
     const fileUrl = fileRawUrl.split("?")[0];
@@ -722,8 +729,12 @@ class GalleryCard extends LitElement {
       if (fileNameDateBegins && !Number.isNaN(Number.parseInt(fileNameDateBegins)))
         fileDatePart = fileDatePart.slice(Math.max(0, Number.parseInt(fileNameDateBegins) - 1));
       console.log(fileDatePart);
-      if (fileNameFormat)
+      if (fileNameFormat) {
         date = dayjs(fileDatePart, fileNameFormat);
+        if (fileNameTimeZone) {
+          date = date.tz(fileNameTimeZone);
+        } 
+      }
 
       if (date && captionFormat) {
         if (captionFormat.toUpperCase().trim() === 'AGO')
@@ -748,18 +759,17 @@ class GalleryCard extends LitElement {
     return resource;
   }
 
-  _folderDateFormatter(folderFormat, date ) {
-    return dayjs(date).format(folderFormat);
+  _folderDateFormatter(folderFormat, folderTimeZone, date) {
+    var date_time = date;
+    if (folderTimeZone) {
+      date_time = date_time.tz(folderTimeZone);
+    }
+    return date_time.format(folderFormat);
   }
 
   _formatDateForInput(date) {
-      const yyyy = date.getFullYear();
-      const mm = String(date.getMonth() + 1).padStart(2, '0');
-      const dd = String(date.getDate()).padStart(2, '0');
-
-      return `${yyyy}-${mm}-${dd}`;
+      return date.format("YYYY-MM-DD");
   }
-
 
   static get styles() {
     return css`
